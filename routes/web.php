@@ -12,7 +12,19 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    dd(App\cms_nacel_layouts_produits::search('Stafford London')->explain());
 });
+
+Route::get('/morgan', function () {
+    dd(App\Models\Ville::search('*')->explain());
+});
+
+Route::get('/search', 'ElasticController@search')->name('search');
+
+Route::get('/resultat', function () {
+    return view('resultat');
+})->name('resultat');
+
+Route::post('/getSerp', 'AjaxController@getSerp')->name('toES');
 
 // test migration repo sur poleWEB
