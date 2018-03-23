@@ -73,7 +73,7 @@ class SlProduit extends Modele
      */
     public function formule()
     {
-        return $this->belongsTo('App\Models\Web\Formule');
+        return $this->belongsTo('App\Models\Formule');
     }
 
     /**
@@ -83,7 +83,7 @@ class SlProduit extends Modele
      */
     public function langue()
     {
-        return $this->belongsTo('App\Models\Web\Langue');
+        return $this->belongsTo('App\Models\Langue');
     }
 
     /**
@@ -93,7 +93,7 @@ class SlProduit extends Modele
      */
     public function villes()
     {
-        return $this->belongsToMany('App\Models\Web\Ville', 'sl_produits_villes'); //->whereNull('sl_produits_villes.deleted_at'); // le create_at, updated_at, delete_at ne sont pas stockées sur table pivot.
+        return $this->belongsToMany('App\Models\Ville', 'sl_produits_villes'); //->whereNull('sl_produits_villes.deleted_at'); // le create_at, updated_at, delete_at ne sont pas stockées sur table pivot.
     }
 
     /**
@@ -103,7 +103,7 @@ class SlProduit extends Modele
      */
     public function hebergements()
     {
-        return $this->belongsToMany('App\Models\Web\Hebergement', 'sl_produits_hebergements');
+        return $this->belongsToMany('App\Models\Hebergement', 'sl_produits_hebergements');
     }
 
     /**
@@ -113,7 +113,7 @@ class SlProduit extends Modele
      */
     public function modesTransports()
     {
-        return $this->belongsToMany('App\Models\Web\ModeTransport', 'sl_produits_modes_transports');
+        return $this->belongsToMany('App\Models\ModeTransport', 'sl_produits_modes_transports');
     }
 
     /**
@@ -123,7 +123,7 @@ class SlProduit extends Modele
      */
     public function references()
     {
-        return $this->hasMany('App\Models\Web\SlProduitReference', 'sl_produit_id');
+        return $this->hasMany('App\Models\SlProduitReference', 'sl_produit_id');
     }
 
     /**
@@ -134,7 +134,7 @@ class SlProduit extends Modele
      */
     public function datesProduit()
     {
-        return $this->hasMany('App\Models\Web\SlProduitDate', 'sl_produit_id');
+        return $this->hasMany('App\Models\SlProduitDate', 'sl_produit_id');
     }
 
     /**
@@ -144,7 +144,7 @@ class SlProduit extends Modele
      */
     public function cmsNacelLayoutProduit()
     {
-        return $this->hasOne('App\Models\Web\CmsNacelLayoutProduit');
+        return $this->hasOne('App\Models\CmsNacelLayoutProduit');
     }
 
     /**
@@ -154,7 +154,7 @@ class SlProduit extends Modele
      */
     public function cmsClcLayoutProduitAncien()
     {
-        return $this->hasOne('App\Models\Web\CmsClcLayoutProduitAncien');
+        return $this->hasOne('App\Models\CmsClcLayoutProduitAncien');
     }
 
     //endregion

@@ -42,11 +42,11 @@ class Formule extends Modele
 
     public function slProduit()
     {
-        return $this->hasMany('App\Models\Web\SlProduit');
+        return $this->hasMany('App\Models\SlProduit');
     }
 
     public function categorie()
     {
-        return $this->belongsTo('App\Models\Web\Categorie');
+        return $this->belongsTo('App\Models\Categorie');
     }
 }

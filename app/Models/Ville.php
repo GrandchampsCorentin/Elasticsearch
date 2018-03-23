@@ -42,16 +42,16 @@ class Ville extends Modele
 
     public function pays()
     {
-        return $this->belongsTo('App\Models\Web\Pays');
+        return $this->belongsTo('App\Models\Pays');
     }
 
     public function slProduits()
     {
-        return $this->belongsToMany('App\Models\Web\SlProduit', 'sl_produits_villes')->whereNull('sl_produits_villes.deleted_at');
+        return $this->belongsToMany('App\Models\SlProduit', 'sl_produits_villes')->whereNull('sl_produits_villes.deleted_at');
     }
 
     public function cmsNacelLayoutVille()
     {
-        return $this->hasOne('App\Models\Web\CmsNacelLayoutVille');
+        return $this->hasOne('App\Models\CmsNacelLayoutVille');
     }
 }

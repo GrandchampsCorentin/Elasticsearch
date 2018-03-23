@@ -20,10 +20,7 @@ Route::get('/morgan', function () {
 });
 
 Route::get('/search', 'ElasticController@search')->name('search');
-
-Route::get('/resultat', function () {
-    return view('resultat');
-})->name('resultat');
+Route::get('/getIndex', 'ElasticController@getIndex')->name('getIndex');
 
 Route::post('/getSerp', 'AjaxController@getSerp')->name('toES');
 

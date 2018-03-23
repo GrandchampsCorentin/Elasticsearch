@@ -22,7 +22,7 @@ $(document).ready(function () {
             dataType: "json",
             data: monForm.serialize(),
             success: function (data) {
-                divResult.html(JSON.stringify(data, null, "\t"));
+                divResult.html(JSON.stringify(data, null,2));
             },
             error: function (data) {
                 divResult.html(data);

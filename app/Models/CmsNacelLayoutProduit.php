@@ -162,7 +162,7 @@ class CmsNacelLayoutProduit extends Modele
 
     public function slProduit()
     {
-        return $this->belongsTo('App\Models\Web\SlProduit', 'sl_produit_id', 'id');
+        return $this->belongsTo('App\Models\SlProduit', 'sl_produit_id', 'id');
     }
 
     /**
