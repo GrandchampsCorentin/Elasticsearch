@@ -4,13 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as Controller;
-use App\Models\CmsNacelLayoutProduit;
-use App\Models\Formule;
-use App\Models\SlProduit;
-use App\Models\SlProduitHebergement;
-use App\Models\SlProduitModeTransport;
-use App\Models\SlProduitVille;
-use App\Models\Ville;
 use App\Models\SlProduitES;
 
 class AjaxController extends Controller
@@ -53,7 +46,7 @@ class AjaxController extends Controller
 
         //Villes
         if ($request->has('selectVilles')) {
-            array_push($tbSelects, ['terms' => ['ville_id' => $request->selectVilles], ]);
+            array_push($tbSelects, ['terms' => ['villes_id' => $request->selectVilles], ]);
         } else {
             array_push($tbFields, 'cms.villes');
         }
@@ -67,34 +60,44 @@ class AjaxController extends Controller
 
         //Modes de transports
         if ($request->has('selectModeTransp')) {
-            array_push($tbSelects, ['terms' => ['mode_transport_id' => $request->selectModeTransp], ]);
+            array_push($tbSelects, ['terms' => ['modes_transports_id' => $request->selectModeTransp], ]);
         } else {
             array_push($tbFields, 'cms.modes_transports');
         }
 
         //Prix
         if ($request->has('selectPrix') && $request->selectPrix[0] != -1) {
-            $rq->where('prixAccroche', $request->selectPrix[0]);
+            array_push($tbSelects, ['match' => ['prixAccroche' => $request->selectPrix[0]], ]);
+        } else {
+            array_push($tbFields, 'prixAccroche');
         }
 
         //Age minimum
         if ($request->has('selectAgeMin') && $request->selectAgeMin != -1) {
-            $rq->where('ageMin', '>=', $request->selectAgeMin);
+            array_push($tbSelects, ['range' => ['ageMin' => ['gte' => $request->selectAgeMin]], ]);
+        } else {
+            array_push($tbFields, 'ageMin');
         }
 
         //Age maximum
         if ($request->has('selectAgeMax') && $request->selectAgeMax != -1) {
-            $rq->where('ageMax', '<=', $request->selectAgeMax);
+            array_push($tbSelects, ['range' => ['ageMax' => ['lte' => $request->selectAgeMax]], ]);
+        } else {
+            array_push($tbFields, 'ageMax');
         }
 
         //Heures minimum de cours
         if ($request->has('selectHeureMin') && $request->selectHeureMin != -1) {
-            $rq->where('nbHeuresCoursMin', '>=', $request->selectHeureMin);
+            array_push($tbSelects, ['range' => ['nbHeuresCoursMin' => ['gte' => $request->selectHeureMin]], ]);
+        } else {
+            array_push($tbFields, 'nbHeuresCoursMin');
         }
 
         //Heures maximum de cours
         if ($request->has('selectHeureMax') && $request->selectHeureMax != -1) {
-            $rq->where('nbHeuresCoursMax', '<=', $request->selectHeureMax);
+            array_push($tbSelects, ['range' => ['nbHeuresCoursMax' => ['lte' => $request->selectHeureMax]], ]);
+        } else {
+            array_push($tbFields, 'nbHeuresCoursMax');
         }
 
         //Recherche par l'input TEXTUEL du /search
@@ -113,6 +116,7 @@ class AjaxController extends Controller
                        'query' => $request->queryRecherche, //Requête textuelle
                        'fields' => $tbFields, //Les champs concernés par la recherche textuelle
                        'type' => 'cross_fields', //Oblige la requête à matcher avec le plus de champs possible parmi les champs ci dessus
+                       'analyzer' => 'french',
                    ],
                ];
             //$shouldQuery fait de la recherche textuelle sur les champs à grands textes
@@ -122,6 +126,7 @@ class AjaxController extends Controller
                        'query' => $request->queryRecherche, //Requête textuelle
                        'fields' => ['cms.accroche', 'cms.introduction'], //Les champs concernés par la recherche textuelle
                        'type' => 'best_fields', //On récupère le score du champ qui matche le plus avec la recherche textuelle proposée
+                       'analyzer' => 'french',
                    ],
                ];
         }

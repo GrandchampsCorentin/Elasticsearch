@@ -21,7 +21,7 @@ Route::get('/morgan', function () {
 
 Route::get('/search', 'ElasticController@search')->name('search');
 Route::get('/getIndex', 'ElasticController@getIndex')->name('getIndex');
-
+Route::get('/getProduitCSM', 'ElasticController@getProduitCSM')->name('getProduitCSM');
 Route::post('/getSerp', 'AjaxController@getSerp')->name('toES');
 
 // test migration repo sur poleWEB

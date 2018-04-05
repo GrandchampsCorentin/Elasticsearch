@@ -1,0 +1,90 @@
+//Settings configurator
+    protected $name = 'sl_produit_cms';
+
+    protected $settings = [
+        'index' => [
+            'number_of_replicas' => 0,
+            'number_of_shards' => 3,
+        ],
+
+        'analysis' => [
+            'filter' => [
+                'french_elision' => [
+                    'type' => 'elision',
+                    'articles_case' => true,
+                    'articles' => [
+                        'l', 'm', 't', 'qu', 'n', 's',
+                        'j', 'd', 'c', 'jusqu', 'quoiqu',
+                        'lorsqu', 'puisqu',
+                    ],
+                ],
+                'french_stop' => [
+                    'type' => 'stop',
+                    'stopwords' => '_french_',
+                ],
+                'french_stemmer' => [
+                    'type' => 'stemmer',
+                    'language' => 'light_french',
+                ],
+            ],
+            'analyzer' => [
+                'french' => [
+                    'tokenizer' => 'standard',
+                    'filter' => [
+                        'french_elision',
+                        'lowercase',
+                        'french_stop',
+                        'french_stemmer',
+                    ],
+                ],
+            ],
+        ],
+    ];
+
+
+//Mapping modèle
+
+    protected $mapping = [
+        'properties' => [
+            'cms' => [
+                'properties' => [
+                'langue' => [
+                    'type' => 'text',
+                    'analyzer' => 'french',
+                ],
+                'formule' => [
+                    'type' => 'text',
+                    'analyzer' => 'french',
+                ],
+                'categorie' => [
+                    'type' => 'text',
+                    'analyzer' => 'french',
+                ],
+                'hebergements' => [
+                    'type' => 'text',
+                    'analyzer' => 'french',
+                ],
+                'villes' => [
+                    'type' => 'text',
+                    'analyzer' => 'french',
+                ],
+                'pays' => [
+                    'type' => 'text',
+                    'analyzer' => 'french',
+                ],
+                'modes_transports' => [
+                    'type' => 'text',
+                    'analyzer' => 'french',
+                ],
+                'accroche' => [
+                    'type' => 'text',
+                    'analyzer' => 'french',
+                ],
+                'introduction' => [
+                    'type' => 'text',
+                    'analyzer' => 'french',
+                ],
+            ],
+        ],
+        ],
+    ];

@@ -14,6 +14,7 @@ use App\Models\SlProduit;
 use App\Models\SlProduitES;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Artisan;
+use App\Models\Exemple\SlProduitCMS;
 
 class ElasticController extends Controller
 {
@@ -78,6 +79,53 @@ class ElasticController extends Controller
         $colProduitEs->searchable(); //On permet à notre index de faire ses recherches avec la collection fraichement créée
 
         dump($colProduitEs); //Retour visuel
+    }
+
+    public function getProduitCSM()
+    {
+        //On supprime l'index qui est lié à l'indexConfigurator passé en paramètre
+        Artisan::call('elastic:drop-index', [
+            'index-configurator' => 'App\Models\Exemple\SlProduitCMSIndexConfigurator',
+        ]);
+        //On créé un nouvel index pour ce même indexConfigurator
+        Artisan::call('elastic:create-index', [
+            'index-configurator' => 'App\Models\Exemple\SlProduitCMSIndexConfigurator',
+        ]);
+
+        $colProduits   = SlProduit::with('langue', 'formule.categorie', 'villes.pays', 'cmsNacelLayoutProduit', 'hebergements', 'modesTransports')->get(); //On récupère tous les produits
+        $colProduitCMS = new Collection(); //On créé une nouvelle collection
+
+        foreach ($colProduits as $sl) { //Pour chaque produit on instancie les champs et leurs valeurs
+            $slCMS     = new SlProduitCMS();
+            $slCMS->id = $sl->id;
+
+            if ($sl->cmsNacelLayoutProduit != null) { //Certains produits ne sont pas liés à une page CMS !
+                $slCMS->cms = [
+                    'langue' => $sl->langue->libelle,
+                    'formule' => $sl->formule->libelle,
+                    'categorie' => $sl->formule->categorie->libelle,
+                    'hebergements' => $sl->hebergements->map(function ($h) {
+                        return $h->libelle;
+                    })->toArray(),
+                    'villes' => $sl->villes->map(function ($v) {
+                        return $v->libelle;
+                    })->toArray(),
+                    'pays' => $sl->villes->map(function ($v) {
+                        return $v->pays->libelle;
+                    })->unique()->toArray(),
+                    'modes_transports' => $sl->modesTransports->map(function ($m) {
+                        return $m->libelle;
+                    })->toArray(),
+                    'accroche' => $sl->cmsNacelLayoutProduit->accroche,
+                    'introduction' => strip_tags($sl->cmsNacelLayoutProduit->introduction),
+                ];
+            }
+
+            $colProduitCMS->push($slCMS); //On complête la collection à chaque fin de traitement pour un produit
+        }
+        $colProduitCMS->searchable(); //On permet à notre index de faire ses recherches avec la collection fraichement créée
+
+        dump($colProduitCMS); //Retour visuel
     }
 
     public function search()

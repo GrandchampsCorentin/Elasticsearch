@@ -133,7 +133,7 @@
                                 <select class="form-control form-control-sm" id="selectPrix" name='selectPrix[]'>
                                     <option value='-1'>-</option>
                                     @foreach($slProduitPrix as $produit)
-                                    <option value='{{$produit[' prixAccroche ']}}'>{{$produit['prixAccroche']}} €</option>
+                                    <option value='{{$produit['prixAccroche']}}'>{{$produit['prixAccroche']}} €</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -144,7 +144,7 @@
                                 <select class="form-control form-control-sm" id="selectHeureMin" name='selectHeureMin'>
                                     <option value='-1'>-</option>
                                     @foreach($slProduitHeureMin as $produit)
-                                    <option value='{{$produit[' nbHeuresCoursMin ']}}'>{{$produit['nbHeuresCoursMin']}}</option>
+                                    <option value='{{$produit['nbHeuresCoursMin']}}'>{{$produit['nbHeuresCoursMin']}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -155,7 +155,7 @@
                                 <select class="form-control form-control-sm" id="selectHeureMax" name='selectHeureMax'>
                                     <option value='-1'>-</option>
                                     @foreach($slProduitHeureMax as $produit)
-                                    <option value='{{$produit[' nbHeuresCoursMax ']}}'>{{$produit['nbHeuresCoursMax']}}</option>
+                                    <option value='{{$produit['nbHeuresCoursMax']}}'>{{$produit['nbHeuresCoursMax']}}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -1,19 +1,22 @@
 <?php
 
-namespace App\Models\ES\Configurator;
+namespace App\Models\Exemple;
 
 use ScoutElastic\IndexConfigurator;
 use ScoutElastic\Migratable;
 
-class CmsNacelLayoutProduitIndexConfigurator extends IndexConfigurator
+class SlProduitCMSIndexConfigurator extends IndexConfigurator
 {
     use Migratable;
+
+    protected $name = 'sl_produit_cms';
 
     protected $settings = [
         'index' => [
             'number_of_replicas' => 0,
-            'number_of_shards' => 5,
+            'number_of_shards' => 3,
         ],
+
         'analysis' => [
             'filter' => [
                 'french_elision' => [
